@@ -7,8 +7,8 @@ function envoiAjax()
     {
         if (this.readyState == 4 && this.status == 200)
         {
-            var html = this.responseText;
-            /*var html ="";
+            //var html = this.responseText;
+            var html ="";
 
             var json_reponse = JSON.parse(this.responseText);
 
@@ -30,7 +30,7 @@ function envoiAjax()
             }
 
             html += "</tbody>"+
-                    "</table>";*/
+                    "</table>";
 
             document.getElementById("results").innerHTML = html;
         }

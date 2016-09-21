@@ -1,0 +1,73 @@
+123
+21  <- probleme ++ le programe ce bloque ne pouvant mettre 3 
+
+968157342
+675832914
+83946175  <- pareil avec 2 sur un bloc de 9x9
+
+crée une grille complete
+
+123
+231
+312 
+
+et bouger les lignes en trasversale verticale et horizontale
+
+123
+231 <-
+312 
+
+312 
+123 
+231 <-
+
+ou 
+
+312 
+123 
+231
+^
+
+132 
+213 
+321
+ ^
+
+
+definir un array de collones et un array de ligne
+
+les mettre a jour a chaque deplacement
+
+bouger les colones et ligne aleatoirement
+
+
+[[1,2,3]
+,[2,3,1]
+,[3,1,2]]
+
+
+[[1,2,3]
+,[3,1,2]
+,[2,3,1]]
+
+
+[[1,3,2]
+,[2,1,3]
+,[3,2,1]]
+
+
+[[1,3,2]
+,[3,2,1]
+,[2,1,3]]
+
+[[2,1,3],[1,3,2],[3,2,1]]
+[[2,1,3],[3,2,1],[1,3,2]]
+[[2,3,1],[1,2,3],[3,1,2]]
+[[2,3,1],[3,1,2],[1,2,3]]
+
+[[3,1,2],[1,2,3],[2,3,1]]
+[[3,1,2],[2,3,1],[1,2,3]]
+[[3,2,1],[1,3,2],[2,1,3]]
+[[3,2,1],[2,1,3],[1,3,2]]
+
+

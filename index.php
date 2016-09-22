@@ -18,15 +18,13 @@
 	  	<!-- Coté gauche -->
 	   	<form class="form-group col-md-6" id="formulaire">
 	   		<h3 class="text-center">Formulaire</h3>
-	   		<!-- Champ nbPersonnes -->
+
 			<div class="form-group">
-			  	<label for="comment">Input :</label>
-			  	<textarea class="form-control" rows="17" id="input"></textarea>
+			  	<label class="radio-inline"><input type="radio" name="level" value="1">facile</label>
+				<label class="radio-inline"><input type="radio" name="level" value="2">moyen</label>
+				<label class="radio-inline"><input type="radio" name="level" value="3">difficile</label> 
 			</div>
-			<!-- Affichage des erreurs -->
-			<div class="form-group col-md-12" id="errors">
-			    
-		  	</div>
+
 			<!-- Bouton envoyer -->
 			<div class="form-group col-md-12">
 			    <button type="button" class="btn btn-primary" onclick="envoiAjax()">Envoyer</button>

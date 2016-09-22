@@ -1,6 +1,17 @@
 function envoiAjax()
 {
-	var textArea = document.getElementById('input').value;
+	var radios = document.getElementsByName('level');
+    var valueOfOption = 0;
+
+    for (var i = 0, length = radios.length; i < length; i++) {
+        if (radios[i].checked) {
+            // do whatever you want with the checked radio
+            valueOfOption = radios[i].value;
+
+            // only one radio can be logically checked, don't check the rest
+            break;
+        }
+    }
 
 	var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function()
@@ -21,8 +32,13 @@ function envoiAjax()
 
                 for(var y = 0; y < json_reponse[i].length; y++)
                 {
+                    var number = json_reponse[i][y];
+                    if (number == 0) 
+                    {
+                        number ="";
+                    }
                     html += "<td>"+
-                            json_reponse[i][y]+
+                            number+
                             "</td>";
                 }
 
@@ -40,5 +56,5 @@ function envoiAjax()
     xhttp.open("POST", "controleur.php",true);
     xhttp.setRequestHeader("content-Type", "application/x-www-form-urlencoded");
     xhttp.setRequestHeader("X-Requested-With","XMLHttpRequest");
-    xhttp.send("textArea="+textArea);
+    xhttp.send("option="+valueOfOption);
 }

@@ -2,10 +2,10 @@
 
 set_time_limit (6); //Execution time MAX in seconds
 
-if(isset($_POST['textArea']))
+if(isset($_POST['option']))
 {
 	//Input comming from the view
-	$input = $_POST['textArea'];
+	$input = $_POST['option'];
 
 	
 	$arrayNumbers = array(1,2,3,4,5,6,7,8,9);
@@ -104,6 +104,18 @@ if(isset($_POST['textArea']))
 				$arrayComplet[$i][$whichCase+$randDestination] = $valeurDepart;
 			}
 
+		}
+	}
+
+
+
+	//on enleve des cases 
+	for ($i = 0 ; $i < 9; $i++) //on parcourt chaque ligne
+	{
+		for($y = 0; $y < 9 ; $y++) //
+		{
+			$rand = mt_rand(0,8);
+			$arrayComplet[$i][$rand] = 0;
 		}
 	}
 	

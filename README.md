@@ -1,2 +1,2 @@
-# SandBox
-[Site web php] Template de site web pour tester des scripts php
+# Sudoku
+[Site web php] Creation d'un sudoku

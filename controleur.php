@@ -8,104 +8,112 @@ if(isset($_POST['textArea']))
 	$input = $_POST['textArea'];
 
 	
-	$arrayNumbers = array(/*1,2,3);//*/1,2,3,4,5,6,7,8,9);// array de reference
-	$arrayForRand = $arrayNumbers;//array sur lequel on fait un rand
+	$arrayNumbers = array(1,2,3,4,5,6,7,8,9);
 
-	$arrayLigne = array();//array d'une ligne a ajouter une fois fini a arraycomplet
 	$arrayComplet = array();//array final
 
-	$randNumber= 0;
-	$value = 10;
+	
+	//generation de la grille de base
 
-	for ($i=0; $i < 10000; $i++) { 
-		
-		for ($ligne = 0; $ligne < 9; $ligne++) //pour chaque ligne
-		{ 
-			for ($case = 0; $case < 9; $case++) //pour chaque case d'une ligne
-			{
-				$arrayForRand = $arrayNumbers;
-
-				for ($preligne=0; $preligne < $ligne; $preligne++)  //on enleve les nombres deja sorti sur cette colone
-				{ 
-					$key = $arrayComplet[$preligne][$case];
-					$key--;//l'array commence a 0
-					$arrayForRand[$key] = 0;
-				}
-
-				for ($precase=0; $precase < $case; $precase++) //on enleve les nombres deja sorti sur cette ligne
-				{ 
-					$key = $arrayLigne[$precase]; 
-					$key--;//l'array commence a 0
-					$arrayForRand[$key] = 0;
-				}
-
-				$somme = 0;
-				foreach ($arrayForRand as  $value) {
-					$somme += $value;
-				}
-
-				if($value == 0)
-				{
-					$arrayComplet = array();
-					$arrayLigne = array();
-					break;
-				}
-
-				do //on cherche parmi les nombres restant
-				{
-					
-					$randNumber = array_rand($arrayForRand);
-					//echo ($arrayForRand[$randNumber]);
-				}
-				while($arrayForRand[$randNumber] == 0);
-				//echo "<br>";
-				
-				array_push($arrayLigne, $arrayForRand[$randNumber]);
-			}
-			array_push($arrayComplet, $arrayLigne);//ajoute la  ligne
-			$arrayLigne = array();//on reset l'array ligne
-
-			if($value == 0)
-			{
-				$arrayComplet = array();
-				$arrayLigne = array();
-				break;
-			}
+	for($i = 0 ; $i < 9; $i++) 
+	{
+		array_push($arrayComplet, $arrayNumbers);
+		for($y = 0; $y <3; $y++)
+		{
+			array_unshift($arrayNumbers, $arrayNumbers[sizeof($arrayNumbers)-1]);
+			array_pop($arrayNumbers);
 		}
 
-		/*if($arrayComplet[0][0] == $arrayComplet[1][1] && $arrayComplet[0][1] == $arrayComplet[1][0])
+		if($i == 2 || $i == 5) //toute les 3 lignes on decale de 1 en plus
 		{
-			break;
-		}*/
-
-		$output = json_encode($arrayComplet);
-		$arrayComplet = array();
-		echo "<br>";
-		echo $output;
+			array_unshift($arrayNumbers, $arrayNumbers[sizeof($arrayNumbers)-1]);
+			array_pop($arrayNumbers);
+		}
 	}
 
 
+	//modification de la grille aleatoirement
+	//$rand = mt_rand(10000,20000);
 
 
 
 
+	for ($tour = 0; $tour < 1000; $tour++) 
+	{
+		if(mt_rand(0,1) == 0) //deplace les lignes dans leur bloc de 3
+		{
+			$whichLigne = mt_rand(1,9); //quelle ligne on bouge
+			$modulo = $whichLigne % 3; //on determine si c'est celle du haut millieu bas
+			$whichLigne--;//l'array commence a 0	
+
+			if($modulo == 1)//depart haut
+			{
+				$randDestination = mt_rand(1,2);
+			}
+			else if($modulo == 2)//depart milleu
+			{
+				do
+				{
+					$randDestination = mt_rand(-1,1);
+				}
+				while($randDestination == 0);
+			}
+			else//depart bas
+			{
+				$randDestination = mt_rand(-2,-1);
+			}
+
+			//on remplace
+
+			$arrayDepart = $arrayComplet[$whichLigne];
+			$arrayDestination = $arrayComplet[$whichLigne+$randDestination];
+			$arrayComplet[$whichLigne] = $arrayDestination;
+			$arrayComplet[$whichLigne+$randDestination] = $arrayDepart;
+		}
+		else //deplace les colonnes dans leur bloc de 3
+		{
+			$whichCase = mt_rand(1,9); //quelle colonne on bouge
+			$modulo = $whichCase % 3; //on determine si c'est celle de gauche millieu droite
+			$whichCase--;//l'array commence a 0
+
+			if($modulo == 1)//depart gauche
+			{
+				$randDestination = mt_rand(1,2);
+			}
+			else if($modulo == 2)//depart milleu
+			{
+				do
+				{
+					$randDestination = mt_rand(-1,1);
+				}
+				while($randDestination == 0);
+			}
+			else//depart droit
+			{
+				$randDestination = mt_rand(-2,-1);
+			}
+
+			//on remplace
 
 
+			for ($i = 0; $i < 9 ; $i++) 
+			{
+				$valeurDepart =  $arrayComplet[$i][$whichCase];
+				$valeurDestination = $arrayComplet[$i][$whichCase+$randDestination];
+				$arrayComplet[$i][$whichCase] = $valeurDestination;
+				$arrayComplet[$i][$whichCase+$randDestination] = $valeurDepart;
+			}
 
-
-
+		}
+	}
 	
 
 
-	
-
-
-	//var_dump($arrayComplet);
 
 	//Output to be send to the view
 
 	$output = json_encode($arrayComplet);
-	//echo $output;
+	echo $output;
 }
 else
 {
